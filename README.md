@@ -1,4 +1,4 @@
-# SUPER-SEND
+# Mail Bridge
 
 ## Description
 

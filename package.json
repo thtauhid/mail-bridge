@@ -1,8 +1,11 @@
 {
   "name": "mail-bridge",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Send email using any email provider.",
-  "main": "build/index.js",
+  "main": "./build/index.js",
+  "files": [
+    "dist/**"
+  ],
   "scripts": {
     "start": "node build/index.js",
     "dev": "tsnd --respawn src/index.ts",

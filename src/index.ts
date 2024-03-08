@@ -1,7 +1,7 @@
 import { sendEmail } from "./sendEmail";
 import { EMAIL, PROVIDER, SECRETS } from "./types";
 
-export class SuperSend {
+export class MailBridge {
   private providers: PROVIDER[];
   private secrets: SECRETS;
 

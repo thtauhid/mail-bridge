@@ -8,6 +8,6 @@ export const sendEmail = async (
 ) => {
   switch (provider) {
     case "RESEND":
-      return sendEmail_RESEND(email, secrets.RESEND_API_KEY!);
+      return await sendEmail_RESEND(email, secrets.RESEND_API_KEY!);
   }
 };

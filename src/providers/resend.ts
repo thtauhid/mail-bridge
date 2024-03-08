@@ -13,7 +13,7 @@ export const sendEmail_RESEND = async (email: EMAIL, api_key: string) => {
 
     console.log(data);
 
-    return data;
+    return [];
   } catch (error) {
     console.error(error);
   }

@@ -1,7 +1,7 @@
 {
   "name": "mail-bridge",
-  "version": "1.0.0",
-  "description": "",
+  "version": "0.0.3",
+  "description": "Send email using any email provider.",
   "main": "build/index.js",
   "scripts": {
     "start": "node build/index.js",
@@ -9,9 +9,18 @@
     "build": "tsc",
     "build:watch": "tsc -w"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "email",
+    "send-email",
+    "email-provider"
+  ],
+  "author": "Tasnimul H. Tauhid",
+  "license": "MIT",
+  "homepage": "https://github.com/thtauhid/mail-bridge",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/thtauhid/mail-bridge"
+  },
   "devDependencies": {
     "@types/node": "^20.11.25",
     "ts-node-dev": "^2.0.0",

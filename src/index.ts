@@ -1,17 +1,30 @@
-import { PORT } from "./constants";
+import { sendEmail } from "./sendEmail";
+import { EMAIL, PROVIDER, SECRETS } from "./types";
 
-import express from "express";
-import morgan from "morgan";
-const app = express();
+export class SuperSend {
+  private providers: PROVIDER[];
+  private secrets: SECRETS;
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(morgan("dev"));
+  constructor(providers: PROVIDER[], secrets: SECRETS) {
+    this.providers = providers;
 
-app.get("/", (req, res) => {
-  res.send("Hello World");
-});
+    if (providers.includes("RESEND") && !secrets?.RESEND_API_KEY) {
+      throw new Error(
+        "Error: RESEND_API_KEY is required. Pass it in the secrets object when initializing SuperSend"
+      );
+    }
 
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+    this.secrets = secrets;
+    console.log("SuperSend initialized");
+  }
+
+  async send(email: EMAIL, provider?: PROVIDER) {
+    // Use the default provider if none is provided
+    if (!provider) {
+      return sendEmail(email, this.providers[0], this.secrets);
+    }
+
+    // Use the provided provider
+    return sendEmail(email, provider, this.secrets);
+  }
+}

@@ -7,13 +7,13 @@ Currently under development.
 
 ## Email Providers
 
-| Provider | Supported |
-| -------- | --------- |
-| Resend   | Planned   |
-| SendGrid | Planned   |
-| Mailgun  | Planned   |
-| Amazon   | Planned   |
-| Gmail    | Planned   |
+| Provider | Support |
+| -------- | ------- |
+| Resend   | ✅      |
+| SendGrid | Planned |
+| Mailgun  | Planned |
+| Amazon   | Planned |
+| Gmail    | Planned |
 
 ## Contributing
 

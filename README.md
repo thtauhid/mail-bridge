@@ -1,10 +1,20 @@
-# TS-EXPRESS-STARTER
+# SUPER-SEND
 
 ## Description
 
-This is a starter project for a TypeScript Express server. It includes a basic setup for a server.
+Send email using any email provider.
+Currently under development.
 
-## Features
+## Email Providers
 
-    - TypeScript
-    - Express
+| Provider | Supported |
+| -------- | --------- |
+| Resend   | Planned   |
+| SendGrid | Planned   |
+| Mailgun  | Planned   |
+| Amazon   | Planned   |
+| Gmail    | Planned   |
+
+## Contributing
+
+Contributions are welcome. Please open an issue or a pull request.

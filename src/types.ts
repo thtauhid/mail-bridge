@@ -1,6 +1,6 @@
 export type EMAIL = {
   to: string | string[];
-  from: string;
+  from?: string;
   subject: string;
   body: string;
 };

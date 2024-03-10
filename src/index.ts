@@ -85,12 +85,21 @@ export class MailBridge {
         report.errors.push("BREVO.auth.pass is required.");
     }
 
+    // AWS SES
     if (
       this.provider_priority.includes("AWS_SES") &&
       !this.config.AWS_SES?.REGION
     ) {
-      // AWS SES
       report.errors.push("AWS_SES.REGION is required");
+    }
+
+    // MAILGUN
+    if (this.provider_priority.includes("MAILGUN")) {
+      if (!this.config.MAILGUN?.MAILGUN_API_KEY)
+        report.errors.push("MAILGUN.MAILGUN_API_KEY is required.");
+
+      if (!this.config.MAILGUN?.MAILGUN_DOMAIN)
+        report.errors.push("MAILGUN.MAILGUN_DOMAIN is required.");
     }
 
     // Default from

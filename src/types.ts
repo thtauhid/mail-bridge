@@ -5,7 +5,7 @@ export type EMAIL = {
   text: string;
 };
 
-export type PROVIDER = "RESEND" | "BREVO" | "AWS_SES" | "SMTP";
+export type PROVIDER = "RESEND" | "BREVO" | "AWS_SES" | "SMTP" | "MAILGUN";
 
 export type CONFIG = {
   RESEND?: {
@@ -17,6 +17,10 @@ export type CONFIG = {
     // TODO: Proper credentials to be added here
   };
   SMTP?: Transporter;
+  MAILGUN?: {
+    MAILGUN_API_KEY: string;
+    MAILGUN_DOMAIN: string;
+  };
 };
 
 export type EMAIL_SENT_RESPONSE = {

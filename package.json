@@ -12,6 +12,7 @@
     "start": "node build/index.js",
     "dev": "tsnd --respawn src/index.ts",
     "lint": "tsc",
+    "test": "tsnd --respawn test/index.ts",
     "build": "tsup src/index.ts --format esm,cjs --dts",
     "prepublishOnly": "pnpm build"
   },

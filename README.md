@@ -12,12 +12,12 @@ Currently under development.
 | SMTP     | ✅                   | Uses nodemailer under the hood        |
 | Resend   | ✅                   | Uses official resend package          |
 | Brevo    | ✅                   | Uses SMTP (nodemailer) under the hood |
+| Mailgun  | ✅                   | Uses official mailgun.js package      |
 | AWS SES  | Under Implementation |                                       |
 | Mailjet  | Planned              |                                       |
 | Loops    | Planned              |                                       |
 | Gmail    | Planned              |                                       |
 | Outlook  | Planned              |                                       |
-| Mailgun  | Planned              |                                       |
 | SendGrid | ❌                   | Didn't allow me to create an account. |
 
 ## Installation
@@ -48,11 +48,31 @@ const mailBridge = new MailBridge({
     AWS_SES: {
       REGION: "us-west-2",
     },
+    BREVO: {
+      host: "smtp-relay.brevo.com",
+      port: 587,
+      auth: {
+        user: "user",
+        pass: "pass",
+      },
+    },
+    SMTP: {
+      host: "smtp.example.com",
+      port: 587,
+      auth: {
+        user: "user",
+        pass: "pass",
+      },
+    },
+    MAILGUN: {
+      MAILGUN_API_KEY: "key-1234",
+      MAILGUN_DOMAIN: "example.com",
+    },
   },
   // Then, you need to provide the default "from" email address.
   defaultFrom: "info@example.com",
   // Optionally, you can provide the priority of the email providers (if you have configures multiple providers).
-  priority: ["RESEND", "AWS_SES"],
+  priority: ["RESEND", "AWS_SES", "BREVO", "SMTP", "MAILGUN"],
 });
 ```
 
@@ -82,17 +102,23 @@ export type EMAIL = {
   to: string | string[];
   from?: string;
   subject: string;
-  body: string;
+  text: string;
 };
 
-export type PROVIDER = "RESEND" | "AWS_SES";
+export type PROVIDER = "RESEND" | "BREVO" | "AWS_SES" | "SMTP" | "MAILGUN";
 
 export type CONFIG = {
   RESEND?: {
     API_KEY: string;
   };
+  BREVO?: Transporter;
   AWS_SES?: {
     REGION: string;
+  };
+  SMTP?: Transporter;
+  MAILGUN?: {
+    MAILGUN_API_KEY: string;
+    MAILGUN_DOMAIN: string;
   };
 };
 
@@ -107,6 +133,16 @@ export type EMAIL_SENT_FAILURE = {
   provider: PROVIDER;
   time: any; // Date time
   error: string;
+};
+
+// SMTP
+export type Transporter = {
+  host: string;
+  port: number;
+  auth: {
+    user: string;
+    pass: string;
+  };
 };
 ```
 

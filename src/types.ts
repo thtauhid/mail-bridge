@@ -5,7 +5,7 @@ export type EMAIL = {
   text: string;
 };
 
-export type PROVIDER = "RESEND" | "BREVO" | "AWS_SES";
+export type PROVIDER = "RESEND" | "BREVO" | "AWS_SES" | "SMTP";
 
 export type CONFIG = {
   RESEND?: {
@@ -16,6 +16,7 @@ export type CONFIG = {
     REGION: string;
     // TODO: Proper credentials to be added here
   };
+  SMTP?: Transporter;
 };
 
 export type EMAIL_SENT_RESPONSE = {

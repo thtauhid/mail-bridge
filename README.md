@@ -9,8 +9,9 @@ Currently under development.
 
 | Provider | Support              | Comment                                                        |
 | -------- | -------------------- | -------------------------------------------------------------- |
-| Resend   | ✅                   |                                                                |
-| Brevo    | ✅                   |                                                                |
+| SMTP     | ✅                   | Uses nodemailer under the hood                                 |
+| Resend   | ✅                   | Uses official resend package                                   |
+| Brevo    | ✅                   | Uses SMTP (nodemailer) under the hood                          |
 | AWS SES  | Under Implementation |                                                                |
 | Loops    | Planned              |                                                                |
 | Gmail    | Planned              |                                                                |

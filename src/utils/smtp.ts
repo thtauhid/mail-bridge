@@ -1,7 +1,7 @@
 import { createTransport } from "nodemailer";
 import { EMAIL, Transporter } from "../types";
 
-export const sendEmail_SMTP = async (
+export const util_sendEmail_SMTP = async (
   transporter: Transporter,
   email: EMAIL
 ) => {

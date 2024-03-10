@@ -19,12 +19,59 @@ var __async = (__this, __arguments, generator) => {
   });
 };
 
+// src/providers/aws.ts
+import { SendEmailCommand, SESClient } from "@aws-sdk/client-ses";
+var sendEmail_AWS_SES = (email, config) => __async(void 0, null, function* () {
+  const sesClient = new SESClient({ region: config == null ? void 0 : config.REGION });
+  let to_address;
+  if (typeof email.to === "string") {
+    to_address = [email.to];
+  } else {
+    to_address = email.to;
+  }
+  const sendEmailCommand = new SendEmailCommand({
+    Destination: {
+      ToAddresses: to_address
+    },
+    Message: {
+      Body: {
+        Html: {
+          Charset: "UTF-8",
+          Data: email.body
+        }
+      },
+      Subject: {
+        Charset: "UTF-8",
+        Data: email.subject
+      }
+    },
+    Source: email.from
+  });
+  try {
+    const data = yield sesClient.send(sendEmailCommand);
+    return {
+      provider: "AWS_SES",
+      time: /* @__PURE__ */ new Date(),
+      id: data.MessageId,
+      email
+    };
+  } catch (error) {
+    console.log(error);
+    const msg = {
+      provider: "AWS_SES",
+      time: /* @__PURE__ */ new Date(),
+      error
+    };
+    throw new Error(JSON.stringify(msg));
+  }
+});
+
 // src/providers/resend.ts
 import { Resend } from "resend";
-var sendEmail_RESEND = (email, api_key) => __async(void 0, null, function* () {
+var sendEmail_RESEND = (email, config) => __async(void 0, null, function* () {
   var _a;
   try {
-    const resend = new Resend(api_key);
+    const resend = new Resend(config == null ? void 0 : config.API_KEY);
     const data = yield resend.emails.send({
       from: email.from,
       to: email.to,
@@ -49,30 +96,31 @@ var sendEmail_RESEND = (email, api_key) => __async(void 0, null, function* () {
 });
 
 // src/sendEmail.ts
-var sendEmail = (email, provider, secrets) => __async(void 0, null, function* () {
+var sendEmail = (email, provider, config) => __async(void 0, null, function* () {
   switch (provider) {
     case "RESEND":
-      return yield sendEmail_RESEND(email, secrets.RESEND_API_KEY);
+      return yield sendEmail_RESEND(email, config.RESEND);
+    case "AWS_SES":
+      return yield sendEmail_AWS_SES(email, config.AWS_SES);
   }
 });
 
 // src/index.ts
 var MailBridge = class {
   constructor({
-    providers,
-    secrets,
+    config,
+    priority,
     defaultFrom,
     retryCount
   }) {
-    this.providers = providers;
+    this.config = config;
     this.defaultFrom = defaultFrom;
-    this.retryCount = retryCount || 0;
-    if (providers.includes("RESEND") && !(secrets == null ? void 0 : secrets.RESEND_API_KEY)) {
-      throw new Error(
-        "RESEND_API_KEY is required. Pass it in the secrets object when initializing MailBridge"
-      );
+    if (priority) {
+      this.provider_priority = priority;
+    } else {
+      this.provider_priority = Object.keys(config);
     }
-    this.secrets = secrets;
+    this.retryCount = retryCount || 0;
     console.log("MailBridge initialized");
   }
   send(email, provider) {
@@ -81,26 +129,30 @@ var MailBridge = class {
         email.from = this.defaultFrom;
       }
       if (!provider) {
-        return yield sendEmail(email, this.providers[0], this.secrets);
+        return yield sendEmail(email, this.provider_priority[0], this.config);
       }
-      return yield sendEmail(email, provider, this.secrets);
+      return yield sendEmail(email, provider, this.config);
     });
   }
   /**
    * Check the configuration of the MailBridge
    */
   checkConfig() {
+    var _a, _b;
     let report = {
       providers: Array(),
       errors: Array(),
       defaultFrom: void 0,
       comment: ""
     };
-    for (let provider of this.providers) {
+    for (let provider of this.provider_priority) {
       report.providers.push(provider);
     }
-    if (this.providers.includes("RESEND") && !this.secrets.RESEND_API_KEY) {
-      report.errors.push("RESEND_API_KEY is required");
+    if (this.provider_priority.includes("RESEND") && !((_a = this.config.RESEND) == null ? void 0 : _a.API_KEY)) {
+      report.errors.push("RESEND.API_KEY is required");
+    }
+    if (this.provider_priority.includes("AWS_SES") && !((_b = this.config.AWS_SES) == null ? void 0 : _b.REGION)) {
+      report.errors.push("AWS_SES.REGION is required");
     }
     if (!this.defaultFrom) {
       report.errors.push("Default from address is not configured");

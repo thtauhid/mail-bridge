@@ -12,7 +12,9 @@
     "start": "node build/index.js",
     "dev": "tsnd --respawn src/index.ts",
     "lint": "tsc",
-    "build": "tsup src/index.ts --format esm,cjs --dts"
+    "build": "tsup src/index.ts --format esm,cjs --dts",
+    "publish": "pnpm build && npm publish",
+    "pub": "pnpm publish"
   },
   "keywords": [
     "email",

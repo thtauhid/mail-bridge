@@ -1,6 +1,6 @@
 {
   "name": "mail-bridge",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "Send email using any email provider.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -13,8 +13,7 @@
     "dev": "tsnd --respawn src/index.ts",
     "lint": "tsc",
     "build": "tsup src/index.ts --format esm,cjs --dts",
-    "publish": "pnpm build && npm publish",
-    "pub": "pnpm publish"
+    "prepublishOnly": "pnpm build"
   },
   "keywords": [
     "email",

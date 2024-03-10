@@ -25,7 +25,7 @@
   "homepage": "https://github.com/thtauhid/mail-bridge",
   "repository": {
     "type": "git",
-    "url": "https://github.com/thtauhid/mail-bridge"
+    "url": "git+https://github.com/thtauhid/mail-bridge.git"
   },
   "devDependencies": {
     "@types/node": "^20.11.25",

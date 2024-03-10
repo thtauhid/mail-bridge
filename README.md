@@ -7,16 +7,18 @@ Currently under development.
 
 ## Email Providers
 
-| Provider | Support              | Comment                                                        |
-| -------- | -------------------- | -------------------------------------------------------------- |
-| SMTP     | ✅                   | Uses nodemailer under the hood                                 |
-| Resend   | ✅                   | Uses official resend package                                   |
-| Brevo    | ✅                   | Uses SMTP (nodemailer) under the hood                          |
-| AWS SES  | Under Implementation |                                                                |
-| Loops    | Planned              |                                                                |
-| Gmail    | Planned              |                                                                |
-| Mailgun  | ⚠️                   | Doesn't have a free plan. So, can't test. Maybe in the future. |
-| SendGrid | ❌                   | Didn't allow me to create an account.                          |
+| Provider | Support              | Comment                               |
+| -------- | -------------------- | ------------------------------------- |
+| SMTP     | ✅                   | Uses nodemailer under the hood        |
+| Resend   | ✅                   | Uses official resend package          |
+| Brevo    | ✅                   | Uses SMTP (nodemailer) under the hood |
+| AWS SES  | Under Implementation |                                       |
+| Mailjet  | Planned              |                                       |
+| Loops    | Planned              |                                       |
+| Gmail    | Planned              |                                       |
+| Outlook  | Planned              |                                       |
+| Mailgun  | Planned              |                                       |
+| SendGrid | ❌                   | Didn't allow me to create an account. |
 
 ## Installation
 

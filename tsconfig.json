@@ -8,8 +8,6 @@
     "skipLibCheck": true,
     // "noUncheckedIndexedAccess": true,
     "noEmit": true,
-
-    "rootDir": "./src",
     "outDir": "./dist"
   }
 }

@@ -5,10 +5,20 @@ export type EMAIL = {
   body: string;
 };
 
-export type PROVIDER = "RESEND" | "MAILGUN";
+export type PROVIDER = "RESEND";
 
 export type SECRETS = {
   RESEND_API_KEY?: string;
-  MAILGUN_API_KEY?: string;
-  MAILGUN_DOMAIN?: string;
+};
+
+export type EMAIL_SENT_RESPONSE = {
+  provider: PROVIDER;
+  time: any; // Date time
+  data: any;
+};
+
+export type EMAIL_SENT_FAILURE = {
+  provider: PROVIDER;
+  time: any; // Date time
+  error: string;
 };

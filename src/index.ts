@@ -75,15 +75,6 @@ export class MailBridge {
       report.errors.push("RESEND_API_KEY is required");
     }
 
-    // Mailgun
-    if (this.providers.includes("MAILGUN") && !this.secrets.MAILGUN_API_KEY) {
-      report.errors.push("MAILGUN_API_KEY is required");
-    }
-
-    if (this.providers.includes("MAILGUN") && !this.secrets.MAILGUN_DOMAIN) {
-      report.errors.push("MAILGUN_DOMAIN is required");
-    }
-
     // Default from
     if (!this.defaultFrom) {
       report.errors.push("Default from address is not configured");

@@ -11,10 +11,16 @@ export const sendEmail_RESEND = async (email: EMAIL, api_key: string) => {
       html: email.body,
     });
 
-    console.log(data);
-
-    return [];
+    return data;
   } catch (error) {
-    console.error(error);
+    console.log(error);
+
+    const msg = {
+      provider: "RESEND",
+      time: new Date(),
+      error: error,
+    };
+
+    throw new Error(JSON.stringify(msg));
   }
 };

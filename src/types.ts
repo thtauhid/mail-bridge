@@ -14,7 +14,8 @@ export type SECRETS = {
 export type EMAIL_SENT_RESPONSE = {
   provider: PROVIDER;
   time: any; // Date time
-  data: any;
+  id?: string;
+  email: EMAIL;
 };
 
 export type EMAIL_SENT_FAILURE = {

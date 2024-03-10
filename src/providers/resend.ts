@@ -1,7 +1,10 @@
 import { Resend } from "resend";
-import { EMAIL } from "../types";
+import { EMAIL, EMAIL_SENT_RESPONSE } from "../types";
 
-export const sendEmail_RESEND = async (email: EMAIL, api_key: string) => {
+export const sendEmail_RESEND = async (
+  email: EMAIL,
+  api_key: string
+): Promise<EMAIL_SENT_RESPONSE> => {
   try {
     const resend = new Resend(api_key);
     const data = await resend.emails.send({
@@ -11,7 +14,12 @@ export const sendEmail_RESEND = async (email: EMAIL, api_key: string) => {
       html: email.body,
     });
 
-    return data;
+    return {
+      provider: "RESEND",
+      time: new Date(),
+      id: data.data?.id,
+      email,
+    };
   } catch (error) {
     console.log(error);
 

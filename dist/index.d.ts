@@ -4,11 +4,15 @@ type EMAIL = {
     subject: string;
     body: string;
 };
-type PROVIDER = "RESEND" | "MAILGUN";
+type PROVIDER = "RESEND";
 type SECRETS = {
     RESEND_API_KEY?: string;
-    MAILGUN_API_KEY?: string;
-    MAILGUN_DOMAIN?: string;
+};
+type EMAIL_SENT_RESPONSE = {
+    provider: PROVIDER;
+    time: any;
+    id?: string;
+    email: EMAIL;
 };
 
 declare class MailBridge {
@@ -27,12 +31,12 @@ declare class MailBridge {
         defaultFrom: string;
         retryCount?: number;
     });
-    send(email: EMAIL, provider?: PROVIDER): Promise<never[] | undefined>;
+    send(email: EMAIL, provider?: PROVIDER): Promise<EMAIL_SENT_RESPONSE>;
     /**
      * Check the configuration of the MailBridge
      */
     checkConfig(): {
-        providers: PROVIDER[];
+        providers: "RESEND"[];
         errors: string[];
         defaultFrom: string | undefined;
         comment: string;

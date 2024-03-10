@@ -47,6 +47,7 @@ module.exports = __toCommonJS(src_exports);
 // src/providers/resend.ts
 var import_resend = require("resend");
 var sendEmail_RESEND = (email, api_key) => __async(void 0, null, function* () {
+  var _a;
   try {
     const resend = new import_resend.Resend(api_key);
     const data = yield resend.emails.send({
@@ -55,10 +56,20 @@ var sendEmail_RESEND = (email, api_key) => __async(void 0, null, function* () {
       subject: email.subject,
       html: email.body
     });
-    console.log(data);
-    return [];
+    return {
+      provider: "RESEND",
+      time: /* @__PURE__ */ new Date(),
+      id: (_a = data.data) == null ? void 0 : _a.id,
+      email
+    };
   } catch (error) {
-    console.error(error);
+    console.log(error);
+    const msg = {
+      provider: "RESEND",
+      time: /* @__PURE__ */ new Date(),
+      error
+    };
+    throw new Error(JSON.stringify(msg));
   }
 });
 
@@ -115,12 +126,6 @@ var MailBridge = class {
     }
     if (this.providers.includes("RESEND") && !this.secrets.RESEND_API_KEY) {
       report.errors.push("RESEND_API_KEY is required");
-    }
-    if (this.providers.includes("MAILGUN") && !this.secrets.MAILGUN_API_KEY) {
-      report.errors.push("MAILGUN_API_KEY is required");
-    }
-    if (this.providers.includes("MAILGUN") && !this.secrets.MAILGUN_DOMAIN) {
-      report.errors.push("MAILGUN_DOMAIN is required");
     }
     if (!this.defaultFrom) {
       report.errors.push("Default from address is not configured");

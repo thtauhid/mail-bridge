@@ -1,6 +1,6 @@
 {
   "name": "mail-bridge",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "Send email using any email provider.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",

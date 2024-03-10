@@ -7,13 +7,17 @@ Currently under development.
 
 ## Email Providers
 
-| Provider | Support |
-| -------- | ------- |
-| Resend   | ✅      |
-| SendGrid | Planned |
-| Mailgun  | Planned |
-| Amazon   | Planned |
-| Gmail    | Planned |
+| Provider    | Support              |
+| ----------- | -------------------- |
+| Resend      | ✅                   |
+| AWS SES     | Under Implementation |
+| Loops       | Planned              |
+| Gmail       | Planned              |
+| SendGrid\*  | ❌                   |
+| Mailgun\*\* | ❌                   |
+
+\* SendGrid didn't allow me to create an account.
+\*\* Mailgun doesn't have a free plan that allows me to test the service.
 
 ## Contributing
 

@@ -4,30 +4,34 @@ type EMAIL = {
     subject: string;
     body: string;
 };
-type PROVIDER = "RESEND" | "MAILGUN";
-type SECRETS = {
-    RESEND_API_KEY?: string;
-    MAILGUN_API_KEY?: string;
-    MAILGUN_DOMAIN?: string;
+type PROVIDER = "RESEND" | "AWS_SES";
+type CONFIG = {
+    RESEND?: {
+        API_KEY: string;
+    };
+    AWS_SES?: {
+        REGION: string;
+    };
+};
+type EMAIL_SENT_RESPONSE = {
+    provider: PROVIDER;
+    time: any;
+    id?: string;
+    email: EMAIL;
 };
 
 declare class MailBridge {
-    private providers;
-    private secrets;
+    private config;
+    private provider_priority;
     private defaultFrom;
-    /**
-     * The number of times to retry sending an email.
-     * Multiple retries are useful when the email provider is down.
-     * Multiple providers need to be configured for this to work.
-     */
     private retryCount;
-    constructor({ providers, secrets, defaultFrom, retryCount, }: {
-        providers: PROVIDER[];
-        secrets: SECRETS;
+    constructor({ config, priority, defaultFrom, retryCount, }: {
+        config: CONFIG;
+        priority?: PROVIDER[];
         defaultFrom: string;
         retryCount?: number;
     });
-    send(email: EMAIL, provider?: PROVIDER): Promise<never[] | undefined>;
+    send(email: EMAIL, provider?: PROVIDER): Promise<EMAIL_SENT_RESPONSE>;
     /**
      * Check the configuration of the MailBridge
      */

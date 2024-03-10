@@ -55,7 +55,7 @@ export class MailBridge {
   /**
    * Check the configuration of the MailBridge
    */
-  async checkConfig() {
+  checkConfig() {
     let report = {
       providers: Array<PROVIDER>(),
       errors: Array<string>(),

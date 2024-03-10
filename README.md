@@ -3,21 +3,20 @@
 ## Description
 
 Send email using any email provider.
-Currently under development.
 
 ## Email Providers
 
 | Provider | Support              | Comment                               |
 | -------- | -------------------- | ------------------------------------- |
-| SMTP     | ✅                   | Uses nodemailer under the hood        |
+| SMTP     | ✅                   | Uses nodemailer                       |
 | Resend   | ✅                   | Uses official resend package          |
-| Brevo    | ✅                   | Uses SMTP (nodemailer) under the hood |
 | Mailgun  | ✅                   | Uses official mailgun.js package      |
+| Brevo    | ✅                   | Uses SMTP (nodemailer) under the hood |
+| Gmail    | ✅                   | Uses SMTP (nodemailer) under the hood |
+| Outlook  | ✅                   | Uses SMTP (nodemailer) under the hood |
 | AWS SES  | Under Implementation |                                       |
 | Mailjet  | Planned              |                                       |
 | Loops    | Planned              |                                       |
-| Gmail    | Planned              |                                       |
-| Outlook  | Planned              |                                       |
 | SendGrid | ❌                   | Didn't allow me to create an account. |
 
 ## Installation
@@ -31,7 +30,7 @@ npm install mail-bridge
 First, you need to import the `MailBridge` class.
 
 ```javascript
-const MailBridge = require("mail-bridge"); // CommonJS
+const { MailBridge } = require("mail-bridge"); // CommonJS
 import { MailBridge } from "mail-bridge"; // ES6
 ```
 

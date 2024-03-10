@@ -4,7 +4,6 @@
 - Add a `CONTRIBUTING.md` file
 - Add a `LICENSE` file
 - Update the README.md file
-- Add publish commands to the `package.json` file
 
 ## Features
 

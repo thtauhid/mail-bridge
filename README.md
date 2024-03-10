@@ -41,6 +41,7 @@ Then, you need to create an instance of the `MailBridge` class.
 const mailBridge = new MailBridge({
   // First, you need to provide the configuration for the email providers.
   // You can provide the configuration for single or multiple providers.
+  // Use environment variables or .env file to store sensitive information.
   config: {
     RESEND: {
       API_KEY: "1234",
@@ -79,13 +80,37 @@ const mailBridge = new MailBridge({
 Finally, you can send an email using the `send` method.
 
 ```javascript
-mailBridge.send({
+// You can use async/await
+const mail = await mailBridge.send({
   // "from" is optional. If not provided, the default "from" email address will be used.
   from: "sender-email",
   to: "recipient-email",
   subject: "Email Subject",
   text: "Email Body",
 });
+
+console.log(mail);
+```
+
+```javascript
+// Or you can use Promise(.then, .catch, .finally)
+mailBridge
+  .send({
+    // "from" is optional. If not provided, the default "from" email address will be used.
+    from: "sender-email",
+    to: "recipient-email",
+    subject: "Email Subject",
+    text: "Email Body",
+  })
+  .then((res) => {
+    console.log(res);
+  })
+  .catch((err) => {
+    console.error(err);
+  })
+  .finally(() => {
+    console.log("done");
+  });
 ```
 
 ## API

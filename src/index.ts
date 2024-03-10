@@ -70,11 +70,26 @@ export class MailBridge {
       report.errors.push("RESEND.API_KEY is required");
     }
 
-    // AWS SES
+    // Brevo
+    if (this.provider_priority.includes("BREVO")) {
+      if (!this.config.BREVO?.host)
+        report.errors.push("BREVO.host is required.");
+
+      if (!this.config.BREVO?.port)
+        report.errors.push("BREVO.port is required.");
+
+      if (!this.config.BREVO?.auth.user)
+        report.errors.push("BREVO.auth.user is required.");
+
+      if (!this.config.BREVO?.auth.pass)
+        report.errors.push("BREVO.auth.pass is required.");
+    }
+
     if (
       this.provider_priority.includes("AWS_SES") &&
       !this.config.AWS_SES?.REGION
     ) {
+      // AWS SES
       report.errors.push("AWS_SES.REGION is required");
     }
 

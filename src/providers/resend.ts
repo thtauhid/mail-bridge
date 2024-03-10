@@ -11,7 +11,7 @@ export const sendEmail_RESEND = async (
       from: email.from!,
       to: email.to,
       subject: email.subject,
-      html: email.body,
+      html: email.text,
     });
 
     return {

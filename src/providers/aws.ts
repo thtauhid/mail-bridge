@@ -22,7 +22,7 @@ export const sendEmail_AWS_SES = async (
       Body: {
         Html: {
           Charset: "UTF-8",
-          Data: email.body,
+          Data: email.text,
         },
       },
       Subject: {

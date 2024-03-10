@@ -10,6 +10,7 @@ Currently under development.
 | Provider | Support              | Comment                                                        |
 | -------- | -------------------- | -------------------------------------------------------------- |
 | Resend   | ✅                   |                                                                |
+| Brevo    | ✅                   |                                                                |
 | AWS SES  | Under Implementation |                                                                |
 | Loops    | Planned              |                                                                |
 | Gmail    | Planned              |                                                                |

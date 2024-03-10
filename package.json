@@ -1,6 +1,6 @@
 {
   "name": "mail-bridge",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Send email using any email provider.",
   "main": "./dist/index.js",
   "module": "./dist/index.mjs",
@@ -36,6 +36,7 @@
     "typescript": "^5.4.2"
   },
   "dependencies": {
+    "@aws-sdk/client-ses": "^3.529.1",
     "resend": "^3.2.0"
   }
 }

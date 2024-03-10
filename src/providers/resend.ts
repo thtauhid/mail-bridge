@@ -1,12 +1,12 @@
 import { Resend } from "resend";
-import { EMAIL, EMAIL_SENT_RESPONSE } from "../types";
+import { CONFIG, EMAIL, EMAIL_SENT_RESPONSE } from "../types";
 
 export const sendEmail_RESEND = async (
   email: EMAIL,
-  api_key: string
+  config: CONFIG["RESEND"]
 ): Promise<EMAIL_SENT_RESPONSE> => {
   try {
-    const resend = new Resend(api_key);
+    const resend = new Resend(config?.API_KEY);
     const data = await resend.emails.send({
       from: email.from!,
       to: email.to,

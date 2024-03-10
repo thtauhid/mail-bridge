@@ -1,39 +1,31 @@
 import { sendEmail } from "./sendEmail";
-import { EMAIL, PROVIDER, SECRETS } from "./types";
+import { EMAIL, PROVIDER, CONFIG } from "./types";
 
 export class MailBridge {
-  private providers: PROVIDER[];
-  private secrets: SECRETS;
+  private config: CONFIG;
+  private provider_priority: PROVIDER[];
   private defaultFrom: string;
-  /**
-   * The number of times to retry sending an email.
-   * Multiple retries are useful when the email provider is down.
-   * Multiple providers need to be configured for this to work.
-   */
   private retryCount: number;
 
   constructor({
-    providers,
-    secrets,
+    config,
+    priority,
     defaultFrom,
     retryCount,
   }: {
-    providers: PROVIDER[];
-    secrets: SECRETS;
+    config: CONFIG;
+    priority?: PROVIDER[];
     defaultFrom: string;
     retryCount?: number;
   }) {
-    this.providers = providers;
+    this.config = config;
     this.defaultFrom = defaultFrom;
-    this.retryCount = retryCount || 0;
-
-    if (providers.includes("RESEND") && !secrets?.RESEND_API_KEY) {
-      throw new Error(
-        "RESEND_API_KEY is required. Pass it in the secrets object when initializing MailBridge"
-      );
+    if (priority) {
+      this.provider_priority = priority;
+    } else {
+      this.provider_priority = Object.keys(config) as PROVIDER[];
     }
-
-    this.secrets = secrets;
+    this.retryCount = retryCount || 0;
     console.log("MailBridge initialized");
   }
 
@@ -45,11 +37,11 @@ export class MailBridge {
 
     // Use the default provider if none is provided
     if (!provider) {
-      return await sendEmail(email, this.providers[0], this.secrets);
+      return await sendEmail(email, this.provider_priority[0], this.config);
     }
 
     // Use the provided provider
-    return await sendEmail(email, provider, this.secrets);
+    return await sendEmail(email, provider, this.config);
   }
 
   /**
@@ -64,15 +56,26 @@ export class MailBridge {
     };
 
     // Add all the providers to the report
-    for (let provider of this.providers) {
+    for (let provider of this.provider_priority) {
       report.providers.push(provider);
     }
 
     // Check if the secrets are present for each provider
 
     // Resend
-    if (this.providers.includes("RESEND") && !this.secrets.RESEND_API_KEY) {
-      report.errors.push("RESEND_API_KEY is required");
+    if (
+      this.provider_priority.includes("RESEND") &&
+      !this.config.RESEND?.API_KEY
+    ) {
+      report.errors.push("RESEND.API_KEY is required");
+    }
+
+    // AWS SES
+    if (
+      this.provider_priority.includes("AWS_SES") &&
+      !this.config.AWS_SES?.REGION
+    ) {
+      report.errors.push("AWS_SES.REGION is required");
     }
 
     // Default from

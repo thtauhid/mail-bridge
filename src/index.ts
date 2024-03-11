@@ -63,72 +63,71 @@ export class MailBridge {
     // Check if the secrets are present for each provider
 
     // AWS SES
-    if (this.provider_priority.includes("AWS_SES") && this.config.AWS_SES) {
-      const { REGION } = this.config.AWS_SES;
+    if (this.provider_priority.includes("AWS_SES") && this.config.aws_ses) {
+      const { region: REGION } = this.config.aws_ses;
 
-      if (!REGION) report.errors.push("AWS_SES.REGION is required");
+      if (!REGION) report.errors.push("aws_ses.region is required");
     }
 
     // Brevo
-    if (this.provider_priority.includes("BREVO") && this.config.BREVO) {
-      const { host, port, auth } = this.config.BREVO;
+    if (this.provider_priority.includes("BREVO") && this.config.brevo) {
+      const { host, port, auth } = this.config.brevo;
 
-      if (!host) report.errors.push("BREVO.host is required.");
-      if (!port) report.errors.push("BREVO.port is required.");
-      if (!auth?.user) report.errors.push("BREVO.auth.user is required.");
-      if (!auth?.pass) report.errors.push("BREVO.auth.pass is required.");
+      if (!host) report.errors.push("brevo.host is required.");
+      if (!port) report.errors.push("brevo.port is required.");
+      if (!auth?.user) report.errors.push("brevo.auth.user is required.");
+      if (!auth?.pass) report.errors.push("brevo.auth.pass is required.");
     }
 
     // GMAIL
-    if (this.provider_priority.includes("GMAIL") && this.config.GMAIL) {
-      const { host, port, auth } = this.config.GMAIL;
+    if (this.provider_priority.includes("GMAIL") && this.config.gmail) {
+      const { host, port, auth } = this.config.gmail;
 
-      if (!host) report.errors.push("GMAIL.host is required.");
-      if (!port) report.errors.push("GMAIL.port is required.");
-      if (!auth?.user) report.errors.push("GMAIL.auth.user is required.");
-      if (!auth?.pass) report.errors.push("GMAIL.auth.pass is required.");
+      if (!host) report.errors.push("gmail.host is required.");
+      if (!port) report.errors.push("gmail.port is required.");
+      if (!auth?.user) report.errors.push("gmail.auth.user is required.");
+      if (!auth?.pass) report.errors.push("gmail.auth.pass is required.");
     }
 
     // MAILGUN
-    if (this.provider_priority.includes("MAILGUN") && this.config.MAILGUN) {
-      const { MAILGUN_API_KEY, MAILGUN_DOMAIN } = this.config.MAILGUN;
+    if (this.provider_priority.includes("MAILGUN") && this.config.mailgun) {
+      const { api_key: MAILGUN_API_KEY, domain: MAILGUN_DOMAIN } =
+        this.config.mailgun;
 
-      if (!MAILGUN_API_KEY)
-        report.errors.push("MAILGUN.MAILGUN_API_KEY is required.");
-      if (!MAILGUN_DOMAIN)
-        report.errors.push("MAILGUN.MAILGUN_DOMAIN is required.");
+      if (!MAILGUN_API_KEY) report.errors.push("mailgun.api_key is required.");
+      if (!MAILGUN_DOMAIN) report.errors.push("mailgun.domain is required.");
     }
 
     // OUTLOOK
     if (this.provider_priority.includes("OUTLOOK")) {
-      if (this.config.OUTLOOK) {
-        const { host, port, auth } = this.config.OUTLOOK;
+      if (this.config.outlook) {
+        const { host, port, auth } = this.config.outlook;
 
-        if (!host) report.errors.push("OUTLOOK.host is required.");
-        if (!port) report.errors.push("OUTLOOK.port is required.");
-        if (!auth?.user) report.errors.push("OUTLOOK.auth.user is required.");
-        if (!auth?.pass) report.errors.push("OUTLOOK.auth.pass is required.");
+        if (!host) report.errors.push("outlook.host is required.");
+        if (!port) report.errors.push("outlook.port is required.");
+        if (!auth?.user) report.errors.push("outlook.auth.user is required.");
+        if (!auth?.pass) report.errors.push("outlook.auth.pass is required.");
       } else {
         report.errors.push("OUTLOOK is not configured properly.");
       }
     }
 
     // Resend
-    if (this.provider_priority.includes("RESEND") && this.config.RESEND) {
-      const { API_KEY } = this.config.RESEND;
+    if (this.provider_priority.includes("RESEND") && this.config.resend) {
+      const { api_key: API_KEY } = this.config.resend;
 
-      if (!API_KEY) report.errors.push("RESEND.API_KEY is required");
+      if (!API_KEY) report.errors.push("resend.api_key is required");
     }
 
     // SMTP
     if (this.provider_priority.includes("SMTP")) {
-      if (this.config.SMTP) {
-        const { host, port, auth } = this.config.SMTP;
+      if (this.config.smtp) {
+        const { host, port, auth } = this.config.smtp;
 
-        if (!host) report.errors.push("SMTP.host is required.");
-        if (!port) report.errors.push("SMTP.port is required.");
-        if (!auth?.user) report.errors.push("SMTP.auth.user is required.");
-        if (!auth?.pass) report.errors.push("SMTP.auth.pass is required.");
+        if (!host) report.errors.push("smtp.host is required.");
+        if (!port) report.errors.push("smtp.port is required.");
+        if (!auth?.user) report.errors.push("smtp.auth.user is required.");
+        if (!auth?.pass) report.errors.push("smtp.auth.pass is required.");
       } else {
         report.errors.push("SMTP is not configured properly.");
       }
@@ -152,9 +151,9 @@ export class MailBridge {
     }
 
     if (report.errors.length === 0) {
-      report.comment = "✅ MailBridge seems to be configured correctly";
+      report.comment = "✅ Looks good!";
     } else {
-      report.comment = "❌ MailBridge has some configuration errors";
+      report.comment = "❌ Errors found in the configuration";
     }
 
     return report;

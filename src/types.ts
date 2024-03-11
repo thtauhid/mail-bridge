@@ -15,21 +15,21 @@ export type PROVIDER =
   | "OUTLOOK";
 
 export type CONFIG = {
-  AWS_SES?: {
-    REGION: string;
+  aws_ses?: {
+    region: string;
     // TODO: Proper credentials to be added here
   };
-  BREVO?: Transporter;
-  GMAIL?: Transporter;
-  MAILGUN?: {
-    MAILGUN_API_KEY: string;
-    MAILGUN_DOMAIN: string;
+  brevo?: Transporter;
+  gmail?: Transporter;
+  mailgun?: {
+    api_key: string;
+    domain: string;
   };
-  OUTLOOK?: Transporter;
-  RESEND?: {
-    API_KEY: string;
+  outlook?: Transporter;
+  resend?: {
+    api_key: string;
   };
-  SMTP?: Transporter;
+  smtp?: Transporter;
 };
 
 export type EMAIL_SENT_RESPONSE = {

@@ -10,7 +10,7 @@ const config: {
   retryCount?: number | undefined;
 } = {
   config: {
-    OUTLOOK: {
+    outlook: {
       host: process.env.BREVO_HOST!,
       port: Number(process.env.BREVO_PORT!),
       auth: {
@@ -19,9 +19,9 @@ const config: {
       },
     },
 
-    MAILGUN: {
-      MAILGUN_API_KEY: process.env.MAILGUN_API_KEY!,
-      MAILGUN_DOMAIN: process.env.MAILGUN_DOMAIN!,
+    mailgun: {
+      api_key: process.env.MAILGUN_API_KEY!,
+      domain: process.env.MAILGUN_DOMAIN!,
     },
   },
   defaultFrom: process.env.DEFAULT_FROM!,

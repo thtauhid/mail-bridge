@@ -14,25 +14,25 @@ export const sendEmail = async (
 ) => {
   switch (provider) {
     case "AWS_SES":
-      return await sendEmail_AWS_SES(email, config.AWS_SES);
+      return await sendEmail_AWS_SES(email, config.aws_ses);
 
     case "BREVO":
-      return await sendEmail_BREVO(email, config.BREVO);
+      return await sendEmail_BREVO(email, config.brevo);
 
     case "GMAIL":
-      return await sendEmail_GMAIL(email, config.GMAIL);
+      return await sendEmail_GMAIL(email, config.gmail);
 
     case "MAILGUN":
-      return await sendEmail_MAILGUN(email, config.MAILGUN);
+      return await sendEmail_MAILGUN(email, config.mailgun);
 
     case "OUTLOOK":
-      return await sendEmail_OUTLOOK(email, config.OUTLOOK);
+      return await sendEmail_OUTLOOK(email, config.outlook);
 
     case "RESEND":
-      return await sendEmail_RESEND(email, config.RESEND);
+      return await sendEmail_RESEND(email, config.resend);
 
     case "SMTP":
-      return await sendEmail_SMTP(email, config.SMTP);
+      return await sendEmail_SMTP(email, config.smtp);
 
     default:
       throw new Error("Invalid provider");

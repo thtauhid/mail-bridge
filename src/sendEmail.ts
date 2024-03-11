@@ -5,12 +5,12 @@ import { sendEmail_MAILGUN } from "./providers/mailgun";
 import { sendEmail_OUTLOOK } from "./providers/outlook";
 import { sendEmail_RESEND } from "./providers/resend";
 import { sendEmail_SMTP } from "./providers/smtp";
-import { EMAIL, PROVIDER, CONFIG } from "./types";
+import { CONFIG, EMAIL, PROVIDER } from "./types";
 
 export const sendEmail = async (
   email: EMAIL,
-  provider: PROVIDER,
-  config: CONFIG
+  config: CONFIG,
+  provider: PROVIDER
 ) => {
   switch (provider) {
     case "AWS_SES":

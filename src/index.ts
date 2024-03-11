@@ -37,11 +37,11 @@ export class MailBridge {
 
     // Use the default provider if none is provided
     if (!provider) {
-      return await sendEmail(email, this.provider_priority[0], this.config);
+      return await sendEmail(email, this.config, this.provider_priority[0]);
     }
 
     // Use the provided provider
-    return await sendEmail(email, provider, this.config);
+    return await sendEmail(email, this.config, provider);
   }
 
   /**

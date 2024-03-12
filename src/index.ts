@@ -57,7 +57,7 @@ export class MailBridge {
 
   async send(
     email: EMAIL,
-    { provider, retryCount }: { provider?: PROVIDER; retryCount?: number }
+    override?: { provider?: PROVIDER; retryCount?: number }
   ) {
     // Check if user has provided a "from" field
     if (!email.from) {
@@ -66,20 +66,26 @@ export class MailBridge {
 
     // If user has provided a provider, use that
     // If the provider exists in priority list, move it to the front
-    if (provider && this.provider_priority.includes(provider)) {
+    if (
+      override?.provider &&
+      this.provider_priority.includes(override.provider)
+    ) {
       // Remove the provider from the priority list
       this.provider_priority = this.provider_priority.filter(
-        (p) => p !== provider
+        (p) => p !== override.provider
       );
 
       // Add the provider to the front of the priority list
-      this.provider_priority.unshift(provider);
+      this.provider_priority.unshift(override.provider);
     }
 
     // Limit the number of items in the priority list based on the retry count
-    if (retryCount) {
-      this.provider_priority = this.provider_priority.slice(0, retryCount + 1);
-    } else if (retryCount === 0) {
+    if (override?.retryCount) {
+      this.provider_priority = this.provider_priority.slice(
+        0,
+        override.retryCount + 1
+      );
+    } else if (override?.retryCount === 0) {
       this.provider_priority = this.provider_priority.slice(0, 1);
     } else if (this.retryCount === 0) {
       this.provider_priority = this.provider_priority.slice(0, 1);

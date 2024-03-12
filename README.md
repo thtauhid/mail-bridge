@@ -4,6 +4,13 @@
 
 Send email using any email provider.
 
+## Features
+
+- Send email using multiple email providers.
+- Automatically switch to the next provider if the current provider fails.
+- Simple and easy to use API.
+- Set the priority of the email providers.
+
 ## Email Providers
 
 | Provider | Support              | Comment                               |
@@ -42,13 +49,12 @@ const mailBridge = new MailBridge({
   // You can provide the configuration for single or multiple providers.
   // Use environment variables or .env file to store sensitive information.
   config: {
-    RESEND: {
-      API_KEY: "1234",
+    // AWS SES
+    aws_ses: {
+      region: "us-west-2",
     },
-    AWS_SES: {
-      REGION: "us-west-2",
-    },
-    BREVO: {
+    // Brevo
+    brevo: {
       host: "smtp-relay.brevo.com",
       port: 587,
       auth: {
@@ -56,7 +62,35 @@ const mailBridge = new MailBridge({
         pass: "pass",
       },
     },
-    SMTP: {
+    // Gmail
+    gmail: {
+      host: "smtp.gmail.com",
+      port: 587,
+      auth: {
+        user: "user",
+        pass: "pass",
+      },
+    },
+    // Mailgun
+    mailgun: {
+      api_key: "key-1234",
+      domain: "example.com",
+    },
+    // Resend
+    resend: {
+      api_key: "1234",
+    },
+    // Outlook
+    outlook: {
+      host: "smtp-mail.outlook.com",
+      port: 587,
+      auth: {
+        user: "user",
+        pass: "pass",
+      },
+    },
+    // SMTP
+    smtp: {
       host: "smtp.example.com",
       port: 587,
       auth: {
@@ -64,15 +98,21 @@ const mailBridge = new MailBridge({
         pass: "pass",
       },
     },
-    MAILGUN: {
-      MAILGUN_API_KEY: "key-1234",
-      MAILGUN_DOMAIN: "example.com",
-    },
   },
+
   // Then, you need to provide the default "from" email address.
   defaultFrom: "info@example.com",
+
   // Optionally, you can provide the priority of the email providers (if you have configures multiple providers).
-  priority: ["RESEND", "AWS_SES", "BREVO", "SMTP", "MAILGUN"],
+  // You don't need to provide the priority if you have configured only one provider.
+  // It's not mandatory to provide the priority of all the providers.
+  // If you don't provide the priority of a provider, it will be considered as the lowest priority.
+  priority: ["resend", "brevo", "aws_ses", "smtp", "mailgun"],
+
+  // Optionally, you can provide the default retry count for all the emails.
+  // If you don't provide the retry count, the numbers of providers
+  // defined in the 'config' will be used as the default retry count.
+  retryCount: 3,
 });
 ```
 
@@ -80,13 +120,20 @@ Finally, you can send an email using the `send` method.
 
 ```javascript
 // You can use async/await
-const mail = await mailBridge.send({
-  // "from" is optional. If not provided, the default "from" email address will be used.
-  from: "sender-email",
-  to: "recipient-email",
-  subject: "Email Subject",
-  text: "Email Body",
-});
+const mail = await mailBridge.send(
+  {
+    // "from" is optional. If not provided, the default "from" email address will be used.
+    from: "sender-email",
+    to: "recipient-email",
+    subject: "Email Subject",
+    text: "Email Body",
+  },
+  // Optionally you can pass a provider and rety count as the second parameter
+  {
+    provider: "resend", // Optional. Puts the provider in the first priority.
+    retryCount: 3, // Optional. Overrides the default retry count for the specific email.
+  }
+);
 
 console.log(mail);
 ```
@@ -94,13 +141,20 @@ console.log(mail);
 ```javascript
 // Or you can use Promise(.then, .catch, .finally)
 mailBridge
-  .send({
-    // "from" is optional. If not provided, the default "from" email address will be used.
-    from: "sender-email",
-    to: "recipient-email",
-    subject: "Email Subject",
-    text: "Email Body",
-  })
+  .send(
+    {
+      // "from" is optional. If not provided, the default "from" email address will be used.
+      from: "sender-email",
+      to: "recipient-email",
+      subject: "Email Subject",
+      text: "Email Body",
+    },
+    // Optionally you can pass a provider and rety count as the second parameter
+    {
+      provider: "resend", // Optional. Puts the provider in the first priority.
+      retryCount: 3, // Optional. Overrides the default retry count for the specific email.
+    }
+  )
   .then((res) => {
     console.log(res);
   })
@@ -112,13 +166,6 @@ mailBridge
   });
 ```
 
-## API
-
-| Method      | Description                                    | Parameters                        | Returns                      |
-| ----------- | ---------------------------------------------- | --------------------------------- | ---------------------------- |
-| send        | Send an email                                  | email: EMAIL, provider?: PROVIDER | Promise<EMAIL_SENT_RESPONSE> |
-| checkConfig | Check the configuration of MailBridge instance | -                                 | Configuration Details        |
-
 ## Type Definitions
 
 ```typescript
@@ -129,21 +176,30 @@ export type EMAIL = {
   text: string;
 };
 
-export type PROVIDER = "RESEND" | "BREVO" | "AWS_SES" | "SMTP" | "MAILGUN";
+export type PROVIDER =
+  | "aws_ses"
+  | "brevo"
+  | "gmail"
+  | "mailgun"
+  | "outlook"
+  | "resend"
+  | "smtp";
 
 export type CONFIG = {
-  RESEND?: {
-    API_KEY: string;
+  aws_ses?: {
+    region: string;
   };
-  BREVO?: Transporter;
-  AWS_SES?: {
-    REGION: string;
+  brevo?: Transporter;
+  gmail?: Transporter;
+  mailgun?: {
+    api_key: string;
+    domain: string;
   };
-  SMTP?: Transporter;
-  MAILGUN?: {
-    MAILGUN_API_KEY: string;
-    MAILGUN_DOMAIN: string;
+  outlook?: Transporter;
+  resend?: {
+    api_key: string;
   };
+  smtp?: Transporter;
 };
 
 export type EMAIL_SENT_RESPONSE = {

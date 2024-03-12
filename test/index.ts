@@ -36,14 +36,11 @@ const config: {
 const mailBridge = new MailBridge(config);
 
 // mailBridge
-//   .send(
-//     {
-//       to: process.env.DEFAULT_FROM!,
-//       subject: "Test Email: Retry Function",
-//       text: "Test Email: Retry Function",
-//     },
-//     { provider: "aws_ses" }
-//   )
+//   .send({
+//     to: process.env.DEFAULT_FROM!,
+//     subject: "Test Email: Retry Function",
+//     text: "Test Email: Retry Function",
+//   })
 //   .then((res) => {
 //     console.log(res);
 //   })

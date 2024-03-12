@@ -6,13 +6,13 @@ export type EMAIL = {
 };
 
 export type PROVIDER =
-  | "RESEND"
-  | "BREVO"
-  | "AWS_SES"
-  | "SMTP"
-  | "MAILGUN"
-  | "GMAIL"
-  | "OUTLOOK";
+  | "resend"
+  | "brevo"
+  | "aws_ses"
+  | "smtp"
+  | "mailgun"
+  | "gmail"
+  | "outlook";
 
 export type CONFIG = {
   aws_ses?: {

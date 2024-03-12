@@ -5,17 +5,17 @@ import { CONFIG, EMAIL, EMAIL_SENT_RESPONSE } from "../types";
 
 export const sendEmail_MAILGUN = async (
   email: EMAIL,
-  config: CONFIG["MAILGUN"]
+  config: CONFIG["mailgun"]
 ): Promise<EMAIL_SENT_RESPONSE> => {
   const mailgun = new Mailgun(FormData);
 
   try {
     const mg = mailgun.client({
       username: "api",
-      key: config?.MAILGUN_API_KEY!,
+      key: config?.api_key!,
     });
 
-    const data = await mg.messages.create(config?.MAILGUN_DOMAIN!, {
+    const data = await mg.messages.create(config?.domain!, {
       from: email.from,
       to: email.to,
       subject: email.subject,
@@ -23,7 +23,7 @@ export const sendEmail_MAILGUN = async (
     });
 
     return {
-      provider: "MAILGUN",
+      provider: "mailgun",
       time: new Date(),
       id: data.id,
       email,

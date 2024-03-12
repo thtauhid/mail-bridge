@@ -3,7 +3,7 @@ import { util_sendEmail_SMTP } from "../utils/smtp";
 
 export const sendEmail_SMTP = async (
   email: EMAIL,
-  config: CONFIG["SMTP"]
+  config: CONFIG["smtp"]
 ): Promise<EMAIL_SENT_RESPONSE> => {
   try {
     if (!config) throw new Error("SMTP is not configured properly.");
@@ -11,7 +11,7 @@ export const sendEmail_SMTP = async (
     const message = await util_sendEmail_SMTP(config, email);
 
     return {
-      provider: "SMTP",
+      provider: "smtp",
       time: new Date(),
       id: message.messageId,
       email,

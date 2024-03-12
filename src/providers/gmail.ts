@@ -3,7 +3,7 @@ import { util_sendEmail_SMTP } from "../utils/smtp";
 
 export const sendEmail_GMAIL = async (
   email: EMAIL,
-  config: CONFIG["GMAIL"]
+  config: CONFIG["gmail"]
 ): Promise<EMAIL_SENT_RESPONSE> => {
   try {
     if (!config) throw new Error("GMAIL is not configured properly.");
@@ -11,7 +11,7 @@ export const sendEmail_GMAIL = async (
     const message = await util_sendEmail_SMTP(config, email);
 
     return {
-      provider: "GMAIL",
+      provider: "gmail",
       time: new Date(),
       id: message.messageId,
       email,

@@ -17,7 +17,7 @@ Send email using any email provider.
 | AWS SES  | Under Implementation |                                       |
 | Mailjet  | Planned              |                                       |
 | Loops    | Planned              |                                       |
-| SendGrid | ❌                   | Didn't allow me to create an account. |
+| SendGrid | ❌                   |                                       |
 
 ## Installation
 

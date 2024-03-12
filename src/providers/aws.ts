@@ -3,9 +3,9 @@ import { SendEmailCommand, SESClient } from "@aws-sdk/client-ses";
 
 export const sendEmail_AWS_SES = async (
   email: EMAIL,
-  config: CONFIG["AWS_SES"]
+  config: CONFIG["aws_ses"]
 ): Promise<EMAIL_SENT_RESPONSE> => {
-  const sesClient = new SESClient({ region: config?.REGION });
+  const sesClient = new SESClient({ region: config?.region });
   let to_address: string[]; // Array of email addresses
 
   if (typeof email.to === "string") {
@@ -36,7 +36,7 @@ export const sendEmail_AWS_SES = async (
   try {
     const data = await sesClient.send(sendEmailCommand);
     return {
-      provider: "AWS_SES",
+      provider: "aws_ses",
       time: new Date(),
       id: data.MessageId,
       email,

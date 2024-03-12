@@ -13,25 +13,25 @@ export const sendEmail = async (
   provider: PROVIDER
 ) => {
   switch (provider) {
-    case "AWS_SES":
+    case "aws_ses":
       return await sendEmail_AWS_SES(email, config.aws_ses);
 
-    case "BREVO":
+    case "brevo":
       return await sendEmail_BREVO(email, config.brevo);
 
-    case "GMAIL":
+    case "gmail":
       return await sendEmail_GMAIL(email, config.gmail);
 
-    case "MAILGUN":
+    case "mailgun":
       return await sendEmail_MAILGUN(email, config.mailgun);
 
-    case "OUTLOOK":
+    case "outlook":
       return await sendEmail_OUTLOOK(email, config.outlook);
 
-    case "RESEND":
+    case "resend":
       return await sendEmail_RESEND(email, config.resend);
 
-    case "SMTP":
+    case "smtp":
       return await sendEmail_SMTP(email, config.smtp);
 
     default:

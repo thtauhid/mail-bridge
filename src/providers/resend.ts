@@ -3,10 +3,10 @@ import { CONFIG, EMAIL, EMAIL_SENT_RESPONSE } from "../types";
 
 export const sendEmail_RESEND = async (
   email: EMAIL,
-  config: CONFIG["RESEND"]
+  config: CONFIG["resend"]
 ): Promise<EMAIL_SENT_RESPONSE> => {
   try {
-    const resend = new Resend(config?.API_KEY);
+    const resend = new Resend(config?.api_key);
     const data = await resend.emails.send({
       from: email.from!,
       to: email.to,
@@ -15,7 +15,7 @@ export const sendEmail_RESEND = async (
     });
 
     return {
-      provider: "RESEND",
+      provider: "resend",
       time: new Date(),
       id: data.data?.id,
       email,
